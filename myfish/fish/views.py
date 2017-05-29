@@ -15,7 +15,10 @@ def THR(request, template, context):
 
 # Create your views here.
 def index(request):
-    fp = FishPhoto.objects.all().order_by('-createdAt')[0]
+    fps = FishPhoto.objects.all().order_by('-createdAt')
+    fp = None
+    if fps:
+        fp = fps[0]
     return THR(request, 'index.html', {'fp':fp})
 
 class PhotoForm(forms.Form):

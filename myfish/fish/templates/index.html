@@ -6,6 +6,12 @@
     <title>Title</title>
 </head>
 <body>
-<img src="{% static fp.photo.url %}">
+{% if fp %}
+    <img src="{% static fp.photo.url %}">
+    <br>
+    {{ fp.createdAt }}
+{% else %}
+    No data
+{% endif%}
 </body>
 </html>
