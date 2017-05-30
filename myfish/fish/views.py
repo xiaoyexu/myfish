@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadReque
     HttpResponseNotFound
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
+from django.utils import timezone
 from models import *
 
 def THR(request, template, context):
@@ -17,9 +18,12 @@ def THR(request, template, context):
 def index(request):
     fps = FishPhoto.objects.all().order_by('-createdAt')
     fp = None
+    lastTime = None
+
     if fps:
         fp = fps[0]
-    return THR(request, 'index.html', {'fp':fp})
+        lastTime = timezone.localtime(fp.createdAt)
+    return THR(request, 'index.html', {'fp':fp, 'lastTime': lastTime})
 
 class PhotoForm(forms.Form):
     file = forms.ImageField()
@@ -39,6 +43,7 @@ def upload(request):
     # upfile = pf.cleaned_data['file']
     upfile = request.FILES.get('fishphotofile', None)
     fp = None
+    lastTime = None
     if upfile:
         fp = FishPhoto()
         fp.photo = upfile
