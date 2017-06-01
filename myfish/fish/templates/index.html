@@ -4,15 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
-<h1>For emergency please call 911</h1>
-{% if fp %}
-    <img src="{% static fp.photo.url %}">
-    <br>
-    {{ fp.createdAt }}
-{% else %}
-    No data
-{% endif%}
+<div class="row">
+    <div class="col-xs-12 text-center">
+        <h1>For emergency please call 911</h1>
+        <img src="{% static result.0.photo.url %}">
+        <nav aria-label="">
+            <ul class="pagination">
+                <li>
+                    <a href="index?p={{prev}}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                {% for r in result %}
+                <li><a href="#">{{r.createdAt}}</a></li>
+                {% endfor %}
+                <li>
+                    <a href="index?p={{next}}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
 </body>
 </html>

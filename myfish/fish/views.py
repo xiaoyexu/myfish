@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django import forms
 from django.utils import timezone
 from .models import *
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 def THR(request, template, context):
     """Return HttpResponse object with template and context"""
@@ -17,13 +18,33 @@ def THR(request, template, context):
 # Create your views here.
 def index(request):
     fps = FishPhoto.objects.all().order_by('-createdAt')
-    fp = None
-    lastTime = None
+    paginator = Paginator(fps, 1)
+    page = request.GET.get('p', paginator.num_pages)
+    page = int(page)
+    try:
+        pagingresult = paginator.page(page)
+    except PageNotAnInteger:
+        page = 1
+        pagingresult = paginator.page(1)
+    except EmptyPage:
+        page = paginator.num_pages
+        pagingresult = paginator.page(paginator.num_pages)
+    context = {}
+    context['result'] = pagingresult
+    context['p'] = page
+    context['prev'] = page - 1
+    context['next'] = page + 1
+    return THR(request, 'index.html', context)
 
-    if fps:
-        fp = fps[0]
-        lastTime = timezone.localtime(fp.createdAt)
-    return THR(request, 'index.html', {'fp':fp, 'lastTime': lastTime})
+
+    # fps = FishPhoto.objects.all().order_by('-createdAt')
+    # fp = None
+    # lastTime = None
+    #
+    # if fps:
+    #     fp = fps[0]
+    #     lastTime = timezone.localtime(fp.createdAt)
+    # return THR(request, 'index.html', {'fp':fp, 'lastTime': lastTime})
 
 class PhotoForm(forms.Form):
     file = forms.ImageField()
