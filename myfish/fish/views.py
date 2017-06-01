@@ -19,7 +19,7 @@ def THR(request, template, context):
 def index(request):
     fps = FishPhoto.objects.all().order_by('-createdAt')
     paginator = Paginator(fps, 1)
-    page = request.GET.get('p', paginator.num_pages)
+    page = request.GET.get('p', 1)
     page = int(page)
     try:
         pagingresult = paginator.page(page)

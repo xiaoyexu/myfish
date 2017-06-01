@@ -3,31 +3,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Title</title>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 </head>
 <body>
-<div class="row">
-    <div class="col-xs-12 text-center">
-        <h1>For emergency please call 911</h1>
-        <img src="{% static result.0.photo.url %}">
-        <nav aria-label="">
-            <ul class="pagination">
-                <li>
-                    <a href="index?p={{prev}}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                {% for r in result %}
-                <li><a href="#">{{r.createdAt}}</a></li>
-                {% endfor %}
-                <li>
-                    <a href="index?p={{next}}" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+<div class="container">
+    <div class="row">
+        <div class="text-center">
+            <h1>For emergency please call 911</h1>
+            <img src="{% static result.0.photo.url %}">
+            <nav aria-label="">
+                <ul class="pagination pagination-lg">
+                    <li>
+                        <a href="index?p={{prev}}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% for r in result %}
+                    <li><a href="#">{{r.createdAt}}</a></li>
+                    {% endfor %}
+                    <li>
+                        <a href="index?p={{next}}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 </body>
