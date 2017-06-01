@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadReque
 from django.views.decorators.csrf import csrf_exempt
 from django import forms
 from django.utils import timezone
-from models import *
+from .models import *
 
 def THR(request, template, context):
     """Return HttpResponse object with template and context"""
