@@ -17,9 +17,9 @@ def THR(request, template, context):
 
 # Create your views here.
 def index(request):
-    fps = FishPhoto.objects.all().order_by('-createdAt')
+    fps = FishPhoto.objects.all().order_by('createdAt')
     paginator = Paginator(fps, 1)
-    page = request.GET.get('p', 1)
+    page = request.GET.get('p', paginator.num_pages)
     page = int(page)
     try:
         pagingresult = paginator.page(page)
@@ -32,8 +32,10 @@ def index(request):
     context = {}
     context['result'] = pagingresult
     context['p'] = page
-    context['prev'] = page - 1
-    context['next'] = page + 1
+    if page > 1:
+        context['prev'] = page - 1
+    if page < paginator.num_pages:
+        context['next'] = page + 1
     return THR(request, 'index.html', context)
 
 

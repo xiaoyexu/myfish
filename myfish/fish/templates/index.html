@@ -15,19 +15,23 @@
             <img src="{% static result.0.photo.url %}" width="100%">
             <nav aria-label="">
                 <ul class="pagination pagination-lg">
+                    {% if prev %}
                     <li>
                         <a href="index?p={{prev}}" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
+                    {% endif %}
                     {% for r in result %}
                     <li><a href="#">{{r.createdAt}}</a></li>
                     {% endfor %}
+                    {% if next %}
                     <li>
                         <a href="index?p={{next}}" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
+                    {% endif%}
                 </ul>
             </nav>
         </div>
