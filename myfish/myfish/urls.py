@@ -16,6 +16,6 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^myfish/admin/', include(admin.site.urls)),
     url(r'^myfish/',include('fish.urls')),
 ]
